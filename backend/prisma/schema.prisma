@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DumpStatus {
+  ACTIVE
+  IN_PROGRESS
+  REMOVAL_PENDING_CONFIRMATION
+  REMOVED
+}
+
+enum EnvironmentType {
+  RIVER
+  PARK
+  RESIDENTIAL
+  INDUSTRIAL
+  OTHER
+}
+
+model Municipality {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  dumps     Dump[]
+
+  @@map("municipalities")
+}
+
+model Dump {
+  id              String          @id @default(cuid())
+  description     String
+  latitude        Float
+  longitude       Float
+  urgency         Int             // 1-5
+  appearance      Int             // 1-5
+  environmentType EnvironmentType
+  weight          Float           @default(0)
+  status          DumpStatus      @default(ACTIVE)
+  reportsCount    Int             @default(1)
+  municipalityId  String
+  municipality    Municipality    @relation(fields: [municipalityId], references: [id])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("dumps")
+}

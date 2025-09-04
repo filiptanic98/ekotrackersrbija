@@ -1,0 +1,28 @@
+{
+  "name": "ekotracker-srbija",
+  "version": "1.0.0",
+  "description": "Aplikacija za prijavu, praćenje i analitiku divljih deponija u Srbiji",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "dev:backend": "turbo run dev --filter=backend",
+    "dev:admin": "turbo run dev --filter=admin",
+    "dev:mobile": "turbo run dev --filter=mobile",
+    "test": "turbo run test"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.16"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=20.12.2",
+    "pnpm": ">=8.0.0"
+  },
+  "workspaces": [
+    "backend",
+    "admin", 
+    "mobile",
+    "packages/*"
+  ]
+}
